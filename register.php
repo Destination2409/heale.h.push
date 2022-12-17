@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(isset($_SESSION['user'])){
+    header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,7 +38,7 @@
                             <h4 class="mt-1 mb-5 pb-1">ยินดีต้อนรับสู่ร้าน Heale.H</h4>
                             </div>
 
-                            <form>
+                            <form action="controller/register-customer.php" method="POST">
                             <p>กรอกข้อมูลเพื่อสมัครสมาชิคผู้ใช้งาน</p>
 
                             <div class="form-outline mb-4">
@@ -66,7 +72,7 @@
                             </div>
 
                             <div class="text-center pt-1 mb-5 pb-1">
-                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">สมัครสมาชิค</button>
+                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">สมัครสมาชิค</button>
                                 <!-- <a class="text-muted" href="#!">ลืมรหัสผ่าน?</a> -->
                             </div>
 
@@ -74,6 +80,26 @@
                                 <p class="mb-0 me-2">มีชื่อผู้ใช้งานแล้ว ?</p>
                                 <a href="login.php" class="btn btn-outline-danger">เข้าสู่ระบบเลย</a>
                             </div>
+                            <?php
+                            if (isset($_REQUEST['check'])) {
+                            ?>
+                                <div class="text-center text-danger">
+                                    <?php
+                                    if($_REQUEST['check'] == 'con-password'){
+                                        echo 'รหัสผ่านไม่ตรงกัน !!';
+                                        // echo 'Password not Match !!';
+                                    }elseif($_REQUEST['check'] == 'alreadyexists'){
+                                        echo 'มีผู้ใช้งานนี้อยู่แล้ว !!';
+                                        // echo 'Duplicate Username !!';
+                                    }elseif($_REQUEST['check'] == 'error'){
+                                        echo 'มีบางอย่างผิดพลาด.';
+                                        // echo 'Something went wrong.';
+                                    }
+                                    ?>
+                                </div>
+                            <?php
+                            }
+                            ?>
 
                             </form>
 

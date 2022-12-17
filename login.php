@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(isset($_SESSION['user'])){
+    header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,7 +38,7 @@
                             <h4 class="mt-1 mb-5 pb-1">ยินดีต้อนรับสู่ร้าน Heale.H</h4>
                             </div>
 
-                            <form>
+                            <form action="controller/login-auth.php" method="POST">
                             <p>กรอกข้อมูลเพื่อเข้าใช้งาน</p>
 
                             <div class="form-outline mb-4">
@@ -48,7 +54,7 @@
                             </div>
 
                             <div class="text-center pt-1 mb-5 pb-1">
-                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">เข้าสู่ระบบ</button>
+                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">เข้าสู่ระบบ</button>
                                 <!-- <a class="text-muted" href="#!">ลืมรหัสผ่าน?</a> -->
                             </div>
 
@@ -56,6 +62,29 @@
                                 <p class="mb-0 me-2">ยังไม่มีชื่อผู้ใช้งาน ?</p>
                                 <a href="register.php" class="btn btn-outline-danger">สร้างชื่อผู้ใช้งานเลย</a>
                             </div>
+                            <?php
+                            if (isset($_REQUEST['auth'])) {
+                            ?>
+                                <div class="text-center text-danger">
+                                    <?php
+                                    if($_REQUEST['auth'] == 'fail'){
+                                        echo 'ชื่อผู้ใช้งานหรือรหัสผ่านผิด !';
+                                        // echo 'Username or Password are wrong !';
+                                    }elseif($_REQUEST['auth'] == 'wait'){
+                                        echo 'รอการยืนยันจากแอดมิน !';
+                                        // echo 'Contrat admin to confirm this account !';
+                                    }elseif($_REQUEST['auth'] == 'deny'){
+                                        echo 'ผู้ใช้งานนี้ถูกปิดการใช้งาน !';
+                                        // echo 'Can not use this account !';
+                                    }elseif($_REQUEST['auth'] == 'registered'){
+                                        echo 'รอการยืนยันจากแอดมิน !';
+                                        // echo 'Wait for admin to confirm this account.';
+                                    }
+                                    ?>
+                                </div>
+                            <?php
+                            }
+                            ?>
 
                             </form>
 
