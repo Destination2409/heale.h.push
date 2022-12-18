@@ -5,9 +5,6 @@ $order = mysqli_query($conn, $sql) or die("query filed: get order");
 <section class="page-section bg-light" id="portfolio">
     <div class="container">
         <div class="card text-center my-5">
-            <div class="card-header">
-                <?php include("../layout/menu-admin.php");?>
-            </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-12">
@@ -156,12 +153,11 @@ $order = mysqli_query($conn, $sql) or die("query filed: get order");
 </div>
 <?php include("../layout/footer-script.php");?>
 <script>
-document.getElementById('admin-order').classList.add("active");
 var datatable1 = $('#myTable').DataTable({
     "processing": true,
     // "serverSide": true,
     "ajax": {
-        "url": "<?=$hosturl.'/datatable/order-list.php'?>",
+        "url": "<?=$hosturl.'/datatable/my-order-list.php'?>",
         "type": "GET"
     },
     "columns": [{
@@ -216,7 +212,11 @@ var datatable1 = $('#myTable').DataTable({
         {
             "targets": -1,
             "render": function(data, type, row, meta) {
-                return '<button type="button" id="editbtn" class="btn btn-warning mx-2" data-toggle="modal" data-target="#EditModal" title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></button>';
+                var str = '';
+                if(row.status == 0){
+                    str = '<button type="button" onclick="Delete(' + data + ')" class="btn btn-danger mx-2" title="ยกเลิกรายการ"><i class="fas fa-trash"></i></button>';
+                }
+                return '<button type="button" id="editbtn" class="btn btn-info mx-2" data-toggle="modal" data-target="#EditModal" title="แจ้งชำระเงิน"><i class="fas fa-edit"></i></button>'+str;
             }
         },
         {
@@ -267,7 +267,7 @@ function Delete(id) {
         if (result.isConfirmed || result.value) {
             $.ajax({
                 type: 'POST',
-                url: "<?=$hosturl.'/controller/delete-order.php'?>",
+                url: "<?=$hosturl.'/controller/delete-my-order.php'?>",
                 data: formdata,
                 processData: false,
                 contentType: false,

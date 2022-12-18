@@ -2,7 +2,7 @@
 include("../conn.php");
 session_start();
 $requestData = $_REQUEST;
-$sql = "SELECT * FROM product WHERE 1";
+$sql = "SELECT product.*,product_type.name as product_type FROM product LEFT JOIN product_type ON product.type_id = product_type.id WHERE 1";
 $query = mysqli_query($conn, $sql) or die("query filed: get product");
 $myArray = array();
 while($row = $query->fetch_assoc()) {

@@ -1,7 +1,7 @@
 <?php
 include("../conn.php");
 session_start();
-$qry = $conn->query("DELETE FROM product_type WHERE id = '".$_POST["editid"]."'");
+$qry = $conn->query("DELETE FROM product WHERE id = '".$_POST["editid"]."'");
 
 if($qry){
     $json_data = [

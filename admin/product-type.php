@@ -135,7 +135,7 @@
             {
                 "targets": -1,
                 "render": function(data, type, row, meta) {
-                    return '<button type="button" id="editbtn" class="btn btn-warning mx-2" data-toggle="modal" data-target="#EditModal" title="ลบผู้ใช้งาน"><i class="fas fa-edit"></i></button><button type="button" onclick="Delete(' + data + ')" class="btn btn-danger mx-2"><i class="fas fa-trash"></i></button>';
+                    return '<button type="button" id="editbtn" class="btn btn-warning mx-2" data-toggle="modal" data-target="#EditModal" title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></button><button type="button" onclick="Delete(' + data + ')" class="btn btn-danger mx-2"><i class="fas fa-trash"></i></button>';
                 }
             }
         ],

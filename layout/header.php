@@ -55,7 +55,7 @@ session_start();
                             <?php
                             if (isset($_SESSION['user'])) {
                             ?>
-                                <a class="nav-link"><?="สวัสดีคุณ ".$_SESSION['user']['name']?></a>
+                                <a class="nav-link" href="<?=$hosturl.'/main/my-order.php'?>"><?="สวัสดีคุณ ".$_SESSION['user']['name']?></a>
                             <?php
                             }else{
                             ?>

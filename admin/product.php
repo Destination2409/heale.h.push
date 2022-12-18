@@ -14,7 +14,7 @@ $product_type = mysqli_query($conn, $sql) or die("query filed: get product_type"
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table color-bordered-table dark-bordered-table" style="width:100%" id="myTable">
+                                    <table class="table color-bordered-table dark-bordered-table" id="myTable">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -48,7 +48,7 @@ $product_type = mysqli_query($conn, $sql) or die("query filed: get product_type"
     <div class="modal-content">
         <form id="main_form">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">เพิ่มชนิดสินค้า</h5>
+                <h5 class="modal-title" id="exampleModalLabel">เพิ่มสินค้า</h5>
                 <button class="btn" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -57,7 +57,7 @@ $product_type = mysqli_query($conn, $sql) or die("query filed: get product_type"
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="name">ชื่อชนิด</label>
+                            <label for="name">ชื่อ</label>
                             <input type="text" class="form-control" id="name" name="name" require>
                         </div>
                     </div>
@@ -107,18 +107,54 @@ $product_type = mysqli_query($conn, $sql) or die("query filed: get product_type"
     <div class="modal-content">
         <form id="edit_form">
             <div class="modal-header">
-                <h5 class="modal-title" id="EditModalLabel">แก้ไขชนิดสินค้า</h5>
+                <h5 class="modal-title" id="EditModalLabel">แก้ไขสินค้า</h5>
                 <button class="btn" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-ๅ/">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="editname">ชื่อชนิด</label>
+                            <label for="editname">ชื่อ</label>
                             <input type="text" class="form-control" id="editname" name="editname" require>
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="editdetail">รายละเอียด</label>
+                            <input type="text" class="form-control" id="editdetail" name="editdetail" require>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="editprice">ราคา</label>
+                            <input type="number" class="form-control" id="editprice" name="editprice" require>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="edittype_id">ชนิดสินค้า</label>
+                            <select class="form-select" id="edittype_id" name="edittype_id">
+                                <?php
+                                    foreach($product_type as $row){
+                                        echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="editimg">รูปปัจจุบัน</label>
+                            <input type="file" accept="image/png, image/jpeg" class="form-control" id="editimg" name="editimg" require>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center my-3">
+                        รูปเก่า
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <img src="" width="200" height="200" id="oldimg">
                     </div>
                 </div>
             </div>
@@ -152,6 +188,22 @@ var datatable1 = $('#myTable').DataTable({
             name: 'name'
         },
         {
+            data: 'detail',
+            name: 'detail'
+        },
+        {
+            data: 'price',
+            name: 'price'
+        },
+        {
+            data: 'product_type',
+            name: 'product_type'
+        },
+        {
+            data: 'img',
+            name: 'img'
+        },
+        {
             data: 'created_at',
             name: 'created_at'
         },
@@ -164,7 +216,8 @@ var datatable1 = $('#myTable').DataTable({
             name: 'id'
         }
     ],
-    "columnDefs": [{
+    "columnDefs": [
+        {
             "searchable": false,
             "orderable": false,
             "targets": 0,
@@ -172,9 +225,16 @@ var datatable1 = $('#myTable').DataTable({
         {
             "targets": -1,
             "render": function(data, type, row, meta) {
-                return '<button type="button" id="editbtn" class="btn btn-warning mx-2" data-toggle="modal" data-target="#EditModal" title="ลบผู้ใช้งาน"><i class="fas fa-edit"></i></button><button type="button" onclick="Delete(' + data + ')" class="btn btn-danger mx-2"><i class="fas fa-trash"></i></button>';
+                return '<button type="button" id="editbtn" class="btn btn-warning mx-2" data-toggle="modal" data-target="#EditModal" title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></button><button type="button" onclick="Delete(' + data + ')" class="btn btn-danger mx-2"><i class="fas fa-trash"></i></button>';
             }
-        }
+        },
+        {
+            "targets": -4,
+            "render": function(data, type, row, meta) {
+                return '<img src="<?=$hosturl.'/assets/product'?>/'+data+'" width="100" height="100">';
+            }
+        },
+        { className: "align-middle", targets: "_all" }
     ],
 });
 // on submit main form 
@@ -302,6 +362,10 @@ $("#myTable tbody").on("click", "#editbtn", function() {
     var data = datatable1.row($(this).parents("tr")).data();
     $("#editname").val(data.name);
     $("#editid").val(data.id);
+    $("#editdetail").val(data.detail);
+    $("#editprice").val(data.price);
+    $("#edittype_id").val(data.type_id);
+    $('#oldimg').attr('src','<?=$hosturl.'/assets/product'?>/'+data.img);
 });
 
 $(document).on('submit', '#edit_form', function(e) {
