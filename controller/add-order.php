@@ -5,8 +5,8 @@ $val = '';
 $val .= '"'.$_POST["amount"].'",';
 $val .= '"'.$_POST["product_id"].'",';
 $val .= '"'.$_POST["customer_id"].'",';
-$val .= '"'.date("Y-m-d h:i:sa").'",';
-$val .= '"'.date("Y-m-d h:i:sa").'"';
+$val .= '"'.date("Y-m-d h:i:s").'",';
+$val .= '"'.date("Y-m-d h:i:s").'"';
 
 $qry = $conn->query("INSERT INTO `order`(amount,product_id,customer_id,created_at,updated_at) VALUES($val)");
 

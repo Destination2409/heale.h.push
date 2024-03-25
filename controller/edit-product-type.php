@@ -3,7 +3,7 @@ include("../conn.php");
 session_start();
 $val = '';
 $val .= "name='".$_POST["editname"]."',";
-$val .= "updated_at='".date("Y-m-d h:i:sa")."'";
+$val .= "updated_at='".date("Y-m-d h:i:s")."'";
 $qry = $conn->query("UPDATE product_type SET $val WHERE id = '".$_POST["editid"]."'");
 if($qry){
     $json_data = [

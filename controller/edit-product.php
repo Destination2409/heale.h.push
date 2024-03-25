@@ -44,7 +44,7 @@ if($qry->num_rows != 0){
             ];
         }
     }
-    $val .= 'updated_at="'.date("Y-m-d h:i:sa").'"';
+    $val .= 'updated_at="'.date("Y-m-d h:i:s").'"';
     $qry = $conn->query("UPDATE product SET $val WHERE id = '".$_POST["editid"]."'");
     if(!isset($json_data)){
         if($qry){

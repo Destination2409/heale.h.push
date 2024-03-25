@@ -17,7 +17,7 @@ if($qry->num_rows != 0){
     $val .= '"'.$name.'",';
     $val .= '"'.$tel.'",';
     $val .= '"'.$address.'",';
-    $val .= '"'.date("Y-m-d h:i:sa").'"';
+    $val .= '"'.date("Y-m-d h:i:s").'"';
     $qry = $conn->query("INSERT INTO customer(email,password,name,tel,address,created_at) VALUES($val)");
     if($qry){
         header("Location: ../login.php?auth=registered");

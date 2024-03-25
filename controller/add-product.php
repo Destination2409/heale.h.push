@@ -26,8 +26,8 @@ if($qry->num_rows != 0){
                 $val .= '"'.$_POST["price"].'",';
                 $val .= '"'.$_POST["type_id"].'",';
                 $val .= '"'.$fileNew.'",';
-                $val .= '"'.date("Y-m-d h:i:sa").'",';
-                $val .= '"'.date("Y-m-d h:i:sa").'"';
+                $val .= '"'.date("Y-m-d h:i:s").'",';
+                $val .= '"'.date("Y-m-d h:i:s").'"';
                 $qry = $conn->query("INSERT INTO product(name,detail,price,type_id,img,created_at,updated_at) VALUES($val)");
                 
                 if($qry){
